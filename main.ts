@@ -5,13 +5,21 @@ function levelStart () {
     } else if (currentLevel == 2) {
         tiles.setCurrentTilemap(tilemap`level2`)
     } else if (currentLevel == 3) {
-        tiles.setCurrentTilemap(tilemap`level2`)
+        tiles.setCurrentTilemap(tilemap`level6`)
+    } else if (currentLevel == 4) {
+        game.gameOver(true)
+        game.setGameOverEffect(true, effects.smiles)
     } else {
     	
     }
 }
+info.onCountdownEnd(function () {
+    game.gameOver(false)
+    game.setGameOverEffect(false, effects.slash)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite, location) {
     currentLevel += 1
+    levelStart()
 })
 let currentLevel = 0
 let player1 = sprites.create(img`
@@ -37,3 +45,4 @@ controller.moveSprite(player1)
 scene.cameraFollowSprite(player1)
 currentLevel = 1
 levelStart()
+info.startCountdown(10)
